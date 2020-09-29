@@ -23,7 +23,6 @@ protected:
 
 private:
 	TextureShader* textureShader;
-	TextureShader* textureShader2;
 	TexturedQuad* mesh;
 	TexturedQuad* meshOther;
 };

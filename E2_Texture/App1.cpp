@@ -7,7 +7,6 @@ App1::App1()
 	mesh = nullptr;
 	meshOther = nullptr;
 	textureShader = nullptr;
-	textureShader2 = nullptr;
 }
 
 void App1::init(HINSTANCE hinstance, HWND hwnd, int screenWidth, int screenHeight, Input *in, bool VSYNC, bool FULL_SCREEN)
@@ -24,7 +23,6 @@ void App1::init(HINSTANCE hinstance, HWND hwnd, int screenWidth, int screenHeigh
 	meshOther = new TexturedQuad(renderer->getDevice(), renderer->getDeviceContext());
 
 	textureShader = new TextureShader(renderer->getDevice(), hwnd);
-	textureShader2 = new TextureShader(renderer->getDevice(), hwnd);
 
 }
 
@@ -51,12 +49,6 @@ App1::~App1()
 	{
 		delete textureShader;
 		textureShader = 0;
-	}
-
-	if (textureShader2)
-	{
-		delete textureShader2;
-		textureShader2 = 0;
 	}
 }
 
@@ -98,15 +90,17 @@ bool App1::render()
 
 	// Send geometry data, set shader parameters, render object with shader
 
-	worldMatrix = XMMatrixTranslation(2.0, 0.0, 0.0);
-	textureShader->setShaderParameters(renderer->getDeviceContext(), worldMatrix, viewMatrix, projectionMatrix, textureMgr->getTexture(L"brick"));
+	//worldMatrix = XMMatrixTranslation(2.0, 0.0, 0.0);
+	textureShader->setShaderParameters(renderer->getDeviceContext(), worldMatrix, viewMatrix, projectionMatrix, textureMgr->getTexture(L"brick"), textureMgr->getTexture(L"bunny"));
 	mesh->sendData(renderer->getDeviceContext());
 
-	worldMatrix = XMMatrixTranslation(-2.0, 0.0, 0.0);
-	textureShader2->setShaderParameters(renderer->getDeviceContext(), worldMatrix, viewMatrix, projectionMatrix, textureMgr->getTexture(L"bunny"));
-	meshOther->sendData(renderer->getDeviceContext());
-
 	textureShader->render(renderer->getDeviceContext(), mesh->getIndexCount());
+
+	//worldMatrix = XMMatrixTranslation(-2.0, 0.0, 0.0);
+	//textureShader->setShaderParameters(renderer->getDeviceContext(), worldMatrix, viewMatrix, projectionMatrix, textureMgr->getTexture(L"bunny"));
+	//meshOther->sendData(renderer->getDeviceContext());
+
+	//textureShader->render(renderer->getDeviceContext(), mesh->getIndexCount());
 
 	// Render GUI
 	gui();
